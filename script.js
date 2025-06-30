@@ -81,7 +81,7 @@ const textRotate = () => {
     }
     
     textLoad(); // Initial load
-    const interval = setInterval(textLoad, 1000);
+    const interval = setInterval(textLoad, 500);
     
     // Cleanup interval when navigating away
     return () => clearInterval(interval);
