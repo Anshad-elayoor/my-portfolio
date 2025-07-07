@@ -550,7 +550,7 @@ body {
 
 /* ELMENTRIX Section */
 .elmentrix-section {
-    padding: 8rem 2rem;
+    padding: 2rem 2rem;
     background: var(--secondary);
 }
 
@@ -751,13 +751,14 @@ body {
 .company-logo {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .logo-image {
-    max-width: 200px;
+    max-width: 400px;
     height: auto;
     transition: transform 0.3s ease;
+    margin: 1rem 0;
 }
 
 .logo-image:hover {
