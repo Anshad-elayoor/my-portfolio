@@ -1,234 +1,624 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anshad K | Mechatronics Engineer</title>
+    <title>Anshad K | Robotics Engineer & Mechatronics Innovator</title>
+    <meta name="description"
+        content="Portfolio of Anshad K — Robotics Engineer, Mechatronics Innovator, and Founder of ELMENTRIX. Specializing in AI, Robotics, VLSI Design, and EdTech.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="script.js" defer></script>
 </head>
-<body>
-    <div class="cursor">
-        <i class="fas fa-cog"></i>
-    </div>
-    <div class="cursor-follower">
-        <i class="fas fa-cog"></i>
-    </div>
 
-    <nav class="navbar">
+<body>
+    <!-- Global Particle Canvas Background -->
+    <canvas id="heroCanvas" class="global-canvas"></canvas>
+
+    <!-- Custom Cursor (Gear) -->
+    <div class="cursor"><i class="fas fa-cog"></i></div>
+    <div class="cursor-follower"><i class="fas fa-cog"></i></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <div class="logo">ANSHAD K</div>
-            <div class="menu-btn">
-                <div class="menu-btn__lines"></div>
+            <a href="#home" class="logo">ANSHAD K</a>
+            <div class="menu-btn" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
-            <ul class="nav-items">
-                <li><a href="#home" class="nav-link">HOME</a></li>
-                <li><a href="#about" class="nav-link">ABOUT</a></li>
-                <li><a href="#work" class="nav-link">WORK</a></li>
-                <li><a href="#publications" class="nav-link">PUBLICATIONS</a></li>
-                <li><a href="#contact" class="nav-link">CONTACT</a></li>
-            </ul>
+            <div class="nav-items" id="navItems">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#experience" class="nav-link">Journey</a>
+                <a href="#work" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#publications" class="nav-link">Research</a>
+                <a href="#elmentrix" class="nav-link">Elmentrix</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
         </div>
     </nav>
 
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-text">
-            <h1 class="glitch" data-text="ANSHAD K">ANSHAD K</h1>
-            <div class="animated-text">
-                <span class="text first-text">I'm a</span>
-                <span class="text sec-text">Mechatronics Engineer</span>
+        <div class="hero-content">
+            <div class="hero-badge">Available for opportunities</div>
+            <h1 class="hero-name">
+                <span class="line-reveal">ANSHAD</span>
+                <span class="line-reveal accent-text">K</span>
+            </h1>
+            <div class="hero-roles">
+                <span class="role-prefix">I'm a</span>
+                <span class="role-text" id="roleText">Robotics Engineer</span>
+                <span class="role-cursor">|</span>
             </div>
-            <p class="hero-description">Turning 'one day' into 'today', Turning 'what if' into 'whats next'.</p>
+            <p class="hero-tagline">Turning <em>'one day'</em> into <em>'today'</em>, Turning <em>'what if'</em> into
+                <em>'what's next'</em>.
+            </p>
+            <div class="hero-cta">
+                <a href="#contact" class="btn btn-primary">
+                    <span>Get in Touch</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="ANSHAD K CV (1).pdf" download class="btn btn-outline">
+                    <span>Download CV</span>
+                    <i class="fas fa-download"></i>
+                </a>
+            </div>
+            <div class="hero-socials">
+                <a href="https://www.linkedin.com/in/anshad-k-73ba85215" target="_blank" aria-label="LinkedIn"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/Anshad-elayoor" target="_blank" aria-label="GitHub"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://www.instagram.com/er.anshad?igsh=MWw4YTJ5b3FsNTF6eA==" target="_blank"
+                    aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
         </div>
         <div class="scroll-indicator">
             <div class="mouse">
                 <div class="wheel"></div>
             </div>
-            <div class="arrows">
-                <span class="arrow"></span>
-                <span class="arrow"></span>
-                <span class="arrow"></span>
-            </div>
+            <span class="scroll-text">Scroll Down</span>
         </div>
     </section>
 
-    <section id="about" class="about">
-        <div class="section-header">
-            <h2>ABOUT ME</h2>
-            <div class="line"></div>
-        </div>
-        <div class="about-content">
-            <div class="about-image">
-                <img src="profile.jpg" alt="Anshad K">
-                <div class="image-overlay"></div>
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">01. Introduction</span>
+                <h2>About Me</h2>
             </div>
-            <div class="about-text">
-                <h3>INNOVATE.  BUILD.  ACHIEVE.</h3>
-                <p>As a Mechatronics Engineer and the trailblazing founder of ELMENTRIX, I am passionate about redefining education by integrating advanced technology with innovative learning strategies. My expertise lies in developing AI-driven solutions that revolutionize how knowledge is acquired, delivering immersive, adaptive, and engaging experiences for learners globally. With a robust background in robotics, electronics, and intelligent systems, I create transformative tools that empower educators and students to reach new heights. Fueled by an insatiable curiosity, I immerse myself in studying emerging technologies and researching novel concepts, constantly pushing the boundaries of what’s possible. At ELMENTRIX, my vision is to fuse technology with human ingenuity, transforming visionary ideas into reality with relentless innovation and a commitment to excellence.</p>
-                <div class="tech-stack">
-                    <div class="tech-item">AI</div>
-                    <div class="tech-item">Robotics</div>
-                    <div class="tech-item">Education Tech</div>
-                    <div class="tech-item">Innovation</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="work" class="work">
-        <div class="section-header">
-            <h2>MY WORKS</h2>
-            <div class="line"></div>
-        </div>
-        <div class="work-grid">
-            <div class="work-item diabetes-system">
-                <div class="work-content">
-                    <h3>Diabetics Diagnosis System</h3>
-                    <p>An integrated mechatronic solution for diabetes monitoring and management</p>
-                    <div class="tech-tags">
-                        <span>AI</span>
-                        <span>IoT</span>
-                        <span>Healthcare</span>
+            <div class="about-grid">
+                <div class="about-image-wrapper">
+                    <div class="about-image">
+                        <img src="profile.jpg" alt="Anshad K — Robotics Engineer">
+                        <div class="image-border"></div>
                     </div>
-                    <a href="#" class="work-link">Learn More</a>
                 </div>
-            </div>
-            <div class="work-item blackboard-system">
-                <div class="work-content">
-                    <h3>Smart Blackboard System</h3>
-                    <p>Automated writing and cleaning system for modern classrooms</p>
-                    <div class="tech-tags">
-                        <span>Robotics</span>
-                        <span>Automation</span>
-                        <span>Education</span>
+                <div class="about-text">
+                    <h3>Innovate. Build. Achieve.</h3>
+                    <p>As a Mechatronics Engineer and the trailblazing founder of <strong>ELMENTRIX</strong>, I am
+                        passionate about redefining education by integrating advanced technology with innovative
+                        learning strategies. My expertise lies in developing AI-driven solutions that revolutionize how
+                        knowledge is acquired, delivering immersive, adaptive, and engaging experiences for learners
+                        globally.</p>
+                    <p>With a robust background in robotics, electronics, and intelligent systems, I create
+                        transformative tools that empower educators and students to reach new heights. Currently
+                        pursuing my <strong>M.Tech in VLSI Design</strong> while working as a <strong>Robotics Engineer
+                            at Aisotop</strong>, I am constantly pushing the boundaries of what's possible.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number" data-target="2">0</span><span class="stat-suffix">+</span>
+                            <span class="stat-label">Publications</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-target="4">0</span><span class="stat-suffix">+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-target="2">0</span><span class="stat-suffix">+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
                     </div>
-                    <a href="#" class="work-link">Learn More</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="publications" class="publications">
-        <div class="section-header">
-            <h2>PUBLICATIONS</h2>
-            <div class="line"></div>
-        </div>
-        <div class="publications-grid">
-            <div class="publication-card">
-                <div class="journal-badge">IJCRT 2024</div>
-                <h3>Automatic Blackboard Writing and Cleaning</h3>
-                <p class="authors">Anshad K, Shahal Thayyil, Jishna P, Rashmi V R</p>
-                <p class="abstract">An innovative project designed to enhance the efficiency and functionality of traditional blackboards in educational environments. The system integrates advanced components such as stepper motors, servo motors, Arduino Uno, and A4988 motor drivers to automate the writing and cleaning process.</p>
-                <div class="publication-tags">
-                    <span>Automation</span>
-                    <span>Education</span>
-                    <span>Mechatronics</span>
+    <!-- Experience & Education Section -->
+    <section id="experience" class="section experience">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">02. Journey</span>
+                <h2>Experience & Education</h2>
+            </div>
+            <div class="timeline-tabs">
+                <button class="tab-btn active" data-tab="experience">Experience</button>
+                <button class="tab-btn" data-tab="education">Education</button>
+            </div>
+            <div class="timeline-container">
+                <!-- Experience Timeline -->
+                <div class="timeline active" id="timeline-experience">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-card glass-card">
+                            <div class="card-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80')">
+                            </div>
+                            <div class="card-content">
+                                <div class="timeline-date">March 2025 — Present</div>
+                                <h3>Robotics Engineer</h3>
+                                <h4><i class="fas fa-building"></i> Aisotop, Calicut</h4>
+                                <p>Developing advanced robotic systems and automation solutions. Working on cutting-edge
+                                    robotics applications integrating AI, computer vision, and ROS2 frameworks.</p>
+                                <div class="timeline-tags">
+                                    <span>Robotics</span>
+                                    <span>ROS2</span>
+                                    <span>AI</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-card glass-card">
+                            <div class="card-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80')">
+                            </div>
+                            <div class="card-content">
+                                <div class="timeline-date">June 2024 — March 2025</div>
+                                <h3>Robotics Researcher</h3>
+                                <h4><i class="fas fa-building"></i> Bairuhatech, Calicut</h4>
+                                <p>Conducted research in robotics and automation. Explored novel approaches in embedded
+                                    systems, sensor integration, and intelligent control systems.</p>
+                                <div class="timeline-tags">
+                                    <span>Research</span>
+                                    <span>Embedded Systems</span>
+                                    <span>Automation</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="publication-links">
-                    <a href="https://www.ijcrt.org/papers/IJCRT24A4843.pdf" target="_blank" class="paper-link">
-                        <i class="fas fa-file-pdf"></i>
-                        Read Paper
+                <!-- Education Timeline -->
+                <div class="timeline" id="timeline-education">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-card glass-card">
+                            <div class="card-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=600&q=80')">
+                            </div>
+                            <div class="card-content">
+                                <div class="timeline-date">November 2025 — Present</div>
+                                <h3>M.Tech in VLSI Design</h3>
+                                <h4><i class="fas fa-university"></i> Nehru College of Engineering and Research Centre
+                                </h4>
+                                <p>Pursuing advanced studies in VLSI Design, focusing on FPGA-based systems, digital
+                                    design, and hardware implementations of AI algorithms.</p>
+                                <div class="timeline-tags">
+                                    <span>VLSI</span>
+                                    <span>FPGA</span>
+                                    <span>Digital Design</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-card glass-card">
+                            <div class="card-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&q=80')">
+                            </div>
+                            <div class="card-content">
+                                <div class="timeline-date">2020 — 2024</div>
+                                <h3>B.Tech in Mechatronics Engineering</h3>
+                                <h4><i class="fas fa-university"></i> Malabar College of Engineering and Technolog
+                                </h4>
+                                <p>Comprehensive study of mechanical, electrical, and computer engineering with focus on
+                                    robotics, automation, and intelligent systems.</p>
+                                <div class="timeline-tags">
+                                    <span>Mechatronics</span>
+                                    <span>Robotics</span>
+                                    <span>IoT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">03. Portfolio</span>
+                <h2>Featured Projects</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80')">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="project-number">01</div>
+                        <h3>Hardware Implementation of AI Neuro</h3>
+                        <p>FPGA-based hardware implementation of neural network architectures, bridging the gap between
+                            AI software and silicon-level execution for real-time inference.</p>
+                        <div class="project-tags">
+                            <span>FPGA</span>
+                            <span>AI</span>
+                            <span>VLSI</span>
+                            <span>Neural Networks</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            <span>View Details</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80')">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-icon">
+                            <i class="fas fa-chalkboard"></i>
+                        </div>
+                        <div class="project-number">02</div>
+                        <h3>Smart Blackboard Writing & Cleaning System</h3>
+                        <p>Automated writing and cleaning system for modern classrooms using stepper motors, servo
+                            motors, Arduino Uno, and A4988 motor drivers. Published in IJCRT 2024.</p>
+                        <div class="project-tags">
+                            <span>Robotics</span>
+                            <span>Automation</span>
+                            <span>Education</span>
+                        </div>
+                        <a href="https://www.ijcrt.org/papers/IJCRT24A4843.pdf" target="_blank" class="project-link">
+                            <span>Read Paper</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80')">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="project-number">03</div>
+                        <h3>Automatic Diabetes Diagnosis & Drug Delivery</h3>
+                        <p>A portable, non-invasive device for monitoring blood glucose levels and automatically
+                            delivering insulin. Smart, needle-free diabetes care. Published in IJSR 2023.</p>
+                        <div class="project-tags">
+                            <span>Healthcare</span>
+                            <span>IoT</span>
+                            <span>AI</span>
+                        </div>
+                        <a href="https://www.ijsr.net/getabstract.php?paperid=SR23819135738" target="_blank"
+                            class="project-link">
+                            <span>Read Paper</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=600&q=80')">
+                    </div>
+                    <div class="project-card-content">
+                        <div class="project-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="project-number">04</div>
+                        <h3>Farm Bot</h3>
+                        <p>An autonomous agricultural robot integrating sensor arrays, automated irrigation, and
+                            intelligent monitoring for precision farming and crop management.</p>
+                        <div class="project-tags">
+                            <span>Agriculture</span>
+                            <span>IoT</span>
+                            <span>Automation</span>
+                        </div>
+                        <a href="#" class="project-link">
+                            <span>View Details</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">04. Expertise</span>
+                <h2>Skills & Technologies</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-category-icon"><i class="fas fa-robot"></i></div>
+                        <h3>Robotics & AI</h3>
+                        <div class="skill-items">
+                            <span class="skill-chip">ROS2</span>
+                            <span class="skill-chip">AI for Robotics</span>
+                            <span class="skill-chip">Computer Vision</span>
+                            <span class="skill-chip">Machine Learning</span>
+                            <span class="skill-chip">Deep Learning</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-category-icon"><i class="fas fa-microchip"></i></div>
+                        <h3>Hardware & Embedded</h3>
+                        <div class="skill-items">
+                            <span class="skill-chip">FPGA</span>
+                            <span class="skill-chip">VLSI Design</span>
+                            <span class="skill-chip">Embedded Systems</span>
+                            <span class="skill-chip">Arduino</span>
+                            <span class="skill-chip">Raspberry Pi</span>
+                            <span class="skill-chip">PCB Design</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-category-icon"><i class="fas fa-code"></i></div>
+                        <h3>Programming</h3>
+                        <div class="skill-items">
+                            <span class="skill-chip">Python</span>
+                            <span class="skill-chip">C/C++</span>
+                            <span class="skill-chip">MATLAB</span>
+                            <span class="skill-chip">Verilog</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="skill-category-icon"><i class="fas fa-cogs"></i></div>
+                        <h3>Engineering & Tools</h3>
+                        <div class="skill-items">
+                            <span class="skill-chip">IoT</span>
+                            <span class="skill-chip">3D Printing</span>
+                            <span class="skill-chip">CAD Design</span>
+                            <span class="skill-chip">Automation</span>
+                            <span class="skill-chip">Sensor Integration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="section publications">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">05. Research</span>
+                <h2>Publications</h2>
+            </div>
+            <div class="publications-grid">
+                <div class="publication-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="journal-badge">IJCRT 2024</div>
+                        <h3>Automatic Blackboard Writing and Cleaning</h3>
+                        <p class="authors"><i class="fas fa-users"></i> Anshad K, Shahal Thayyil, Jishna P, Rashmi V R
+                        </p>
+                        <p class="abstract">An innovative project designed to enhance the efficiency and functionality
+                            of traditional blackboards in educational environments. The system integrates advanced
+                            components such as stepper motors, servo motors, Arduino Uno, and A4988 motor drivers to
+                            automate the writing and cleaning process.</p>
+                        <div class="publication-tags">
+                            <span>Automation</span>
+                            <span>Education</span>
+                            <span>Mechatronics</span>
+                        </div>
+                        <div class="publication-links">
+                            <a href="https://www.ijcrt.org/papers/IJCRT24A4843.pdf" target="_blank" class="paper-link">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Read Paper</span>
+                            </a>
+                            <div class="citation-info">
+                                <i class="fas fa-quote-right"></i>
+                                <span>IJCRT Volume 12, Issue 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="publication-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="journal-badge">IJSR 2023</div>
+                        <h3>Automatic Diabetes Diagnosis & Drug Delivery Device</h3>
+                        <p class="authors"><i class="fas fa-users"></i> Anshad K, et al.</p>
+                        <p class="abstract">This study presents a portable, non-invasive device that monitors blood
+                            glucose levels and automatically delivers insulin based on variations. Using painless
+                            sensing technology, it calculates and injects the required dosage — offering a smart,
+                            needle-free solution for diabetes care.</p>
+                        <div class="publication-tags">
+                            <span>Smart Systems</span>
+                            <span>IoT</span>
+                            <span>Healthcare</span>
+                        </div>
+                        <div class="publication-links">
+                            <a href="https://www.ijsr.net/getabstract.php?paperid=SR23819135738" target="_blank"
+                                class="paper-link">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Read Paper</span>
+                            </a>
+                            <div class="citation-info">
+                                <i class="fas fa-quote-right"></i>
+                                <span>IJSR 2023</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Elmentrix Section -->
+    <section id="elmentrix" class="section elmentrix-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">06. Venture</span>
+                <h2>The Passion</h2>
+            </div>
+            <div class="elmentrix-hero">
+                <div class="elmentrix-logo-area">
+                    <img src="elmentrix-logo.png" alt="ELMENTRIX Logo" class="elmentrix-logo">
+                </div>
+                <div class="elmentrix-info">
+                    <h3>Transforming Education Through Technology</h3>
+                    <p>ELMENTRIX is at the forefront of educational innovation, combining cutting-edge technology with
+                        effective learning methodologies. We develop AI-powered solutions that revolutionize how
+                        students learn and interact with technology.</p>
+                    <a href="https://www.elmtrix.com" target="_blank" class="btn btn-primary">
+                        <span>Visit ELMENTRIX</span>
+                        <i class="fas fa-external-link-alt"></i>
                     </a>
-                    <div class="citation-info">
-                        <i class="fas fa-quote-right"></i>
-                        IJCRT Volume 12, Issue 1
+                </div>
+            </div>
+            <div class="elmentrix-features">
+                <div class="feature-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80')">
                     </div>
-                </div>
-            </div>
-
-            <div class="publication-card">
-                <div class="journal-badge">IJSR 2023</div>
-                <h3>Automatic Diabetes Diagnosis & Drug Delivery Device</h3>
-                <p class="authors">Anshad K, et al.</p>
-                <p class="abstract">This study presents a portable, non-invasive device that monitors blood glucose levels and automatically delivers insulin based on variations. Using painless sensing technology, it calculates and injects the required dosage—offering a smart, needle-free solution for diabetes care.</p>
-                <div class="publication-tags">
-                    <span>Smart Systems</span>
-                    <span>IoT</span>
-                    <span>Education Tech</span>
-                </div>
-                <div class="publication-links">
-                    <a href="https://www.ijsr.net/getabstract.php?paperid=SR23819135738" target="_blank" class="paper-link">
-                        <i class="fas fa-file-pdf"></i>
-                        Read Paper
-                    </a>
-                    <div class="citation-info">
-                        <i class="fas fa-quote-right"></i>
-                        IJSR 2023
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section id="elmentrix" class="elmentrix-section">
-        <div class="section-header">
-            <div class="company-logo">
-                <img src="elmentrix-logo.png" alt="ELMENTRIX Logo" class="logo-image">
-            </div>
-            <h2>THE PASSION</h2>
-            <div class="line"></div>
-        </div>
-        <div class="elmentrix-content">
-            <div class="elmentrix-text">
-                <h3>TRANSFORMING EDUCATION THROUGH TECHNOLOGY</h3>
-                <p>ELMENTRIX is at the forefront of educational innovation, combining cutting-edge technology with effective learning methodologies. We develop AI-powered solutions that revolutionize how students learn and interact with technology.</p>
-                <div class="elmentrix-features">
-                    <div class="feature">
-                        <i class="fas fa-brain"></i>
+                    <div class="card-content">
+                        <div class="feature-icon"><i class="fas fa-brain"></i></div>
                         <h4>AI-Powered Learning</h4>
                         <p>Personalized learning paths adapted to each student's needs</p>
                     </div>
-                    <div class="feature">
-                        <i class="fas fa-robot"></i>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="feature-icon"><i class="fas fa-robot"></i></div>
                         <h4>Advanced Technology</h4>
                         <p>Integration of robotics and automation in education</p>
                     </div>
-                    <div class="feature">
-                        <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80')">
+                    </div>
+                    <div class="card-content">
+                        <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
                         <h4>Educational Excellence</h4>
                         <p>Research-based methodologies for optimal learning outcomes</p>
                     </div>
                 </div>
-                <a href="https://www.elmtrix.com" class="elmentrix-link" target="_blank">Visit ELMENTRIX</a>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact">
-        <div class="section-header">
-            <h2>GET IN TOUCH</h2>
-            <div class="line"></div>
-        </div>
-        <div class="contact-content">
-            <div class="contact-text">
-                <h3>LET'S CREATE SOMETHING AMAZING TOGETHER</h3>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/in/anshad-k-73ba85215" target="_blank" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://www.instagram.com/anshad_elayoor/" target="_blank" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://github.com/Anshad-elayoor" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                </div>
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">07. Connect</span>
+                <h2>Get In Touch</h2>
             </div>
-            <div class="company-info">
-                <h3>ELMENTRIX</h3>
-                <p>Transforming Education Through Technology</p>
-                <div class="company-social">
-                    <a href="https://www.instagram.com/elmentrix_" target="_blank">Instagram</a>
-                    <a href="https://www.linkedin.com/company/elmentrix" target="_blank">LinkedIn</a>
-                    <a href="https://www.elmtrix.com" target="_blank">Website</a>
+            <div class="contact-grid">
+                <div class="contact-text">
+                    <h3>Let's Create Something Amazing Together</h3>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your
+                        vision. Whether you want to collaborate on a robotics project, need an AI solution, or just want
+                        to say hi — feel free to reach out!</p>
+                    <a href="mailto:anshadelayoor@gamil.com" class="contact-email">
+                        <i class="fas fa-envelope"></i>
+                        <span>anshadelayoor@gamil.com</span>
+                    </a>
+                    <div class="contact-socials">
+                        <a href="https://www.linkedin.com/in/anshad-k-73ba85215" target="_blank"
+                            class="social-card glass-card">
+                            <i class="fab fa-linkedin-in"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="https://github.com/Anshad-elayoor" target="_blank" class="social-card glass-card">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://www.instagram.com/er.anshad?igsh=MWw4YTJ5b3FsNTF6eA==" target="_blank"
+                            class="social-card glass-card">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-elmentrix glass-card">
+                    <img src="elmentrix-logo.png" alt="ELMENTRIX" class="contact-logo">
+                    <h4>ELMENTRIX</h4>
+                    <p>Transforming Education Through Technology</p>
+                    <div class="elmentrix-socials">
+                        <a href="https://www.instagram.com/elmentrix_?igsh=MTVpeTkyYTE2bnM2dg==" target="_blank"><i
+                                class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.linkedin.com/company/elmentrix" target="_blank"><i
+                                class="fab fa-linkedin-in"></i> LinkedIn</a>
+                        <a href="https://www.elmtrix.com" target="_blank"><i class="fas fa-globe"></i> Website</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">ANSHAD K</div>
+                <p class="footer-text">Designed & Built by Anshad K</p>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
-</html> 
+
+</html>
