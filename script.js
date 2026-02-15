@@ -298,13 +298,13 @@ function initGSAPAnimations() {
     // Hero entrance
     const heroTl = gsap.timeline({ delay: 0.3 });
     heroTl
-        .from('.hero-badge', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out' })
-        .from('.hero-name .line-reveal', { y: 60, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out' }, '-=0.3')
-        .from('.hero-roles', { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-        .from('.hero-tagline', { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.hero-cta .btn', { y: 20, opacity: 0, duration: 0.4, stagger: 0.1, ease: 'power3.out' }, '-=0.2')
-        .from('.hero-socials a', { y: 15, opacity: 0, duration: 0.3, stagger: 0.08, ease: 'power3.out' }, '-=0.2')
-        .from('.scroll-indicator', { y: 20, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.1');
+        .fromTo('.hero-badge', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', clearProps: 'all' })
+        .fromTo('.hero-name .line-reveal', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.15, ease: 'power3.out', clearProps: 'all' }, '-=0.3')
+        .fromTo('.hero-roles', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', clearProps: 'all' }, '-=0.3')
+        .fromTo('.hero-tagline', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', clearProps: 'all' }, '-=0.2')
+        .fromTo('.hero-cta .btn', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: 'power3.out', clearProps: 'all' }, '-=0.2')
+        .fromTo('.hero-socials a', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, stagger: 0.08, ease: 'power3.out', clearProps: 'all' }, '-=0.2')
+        .fromTo('.scroll-indicator', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', clearProps: 'all' }, '-=0.1');
 
     // Section headers
     gsap.utils.toArray('.section-header').forEach(header => {
