@@ -20,6 +20,20 @@
 </head>
 
 <body>
+    <!-- Premium Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-images" id="loaderImages"></div>
+        <div class="loader-overlay"></div>
+        <div class="loader-name">
+            <div class="loader-name-row">
+                <span class="loader-name-first">ANSHAD</span>
+                <span class="loader-name-last">K</span>
+            </div>
+            <div class="loader-bar-track">
+                <div class="loader-bar" id="loaderBar"></div>
+            </div>
+        </div>
+    </div>
     <!-- Global Particle Canvas Background -->
     <canvas id="heroCanvas" class="global-canvas"></canvas>
 
@@ -43,6 +57,7 @@
                 <a href="#work" class="nav-link">Projects</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#publications" class="nav-link">Research</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
                 <a href="#elmentrix" class="nav-link">Elmentrix</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
@@ -55,7 +70,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <div class="hero-badge">Available for opportunities</div>
+
             <h1 class="hero-name">
                 <span class="line-reveal">ANSHAD</span>
                 <span class="line-reveal accent-text">K</span>
@@ -554,11 +569,75 @@
         </div>
     </section>
 
+    <!-- Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">07. Moments</span>
+                <h2>Photo Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/IMG-20251115-WA0004.jpg" alt="Gallery Image 1">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/IMG-20251117-WA0093.jpg" alt="Gallery Image 2">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/IMG-20251117-WA0094.jpg" alt="Gallery Image 3">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/IMG-20251117-WA0095.jpg" alt="Gallery Image 4">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/WhatsApp Image 2026-03-04 at 2.50.58 PM.jpeg" alt="Gallery Image 5">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/WhatsApp Image 2026-03-04 at 2.50.59 PM (1).jpeg" alt="Gallery Image 6">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item glass-card gallery-item-1">
+                    <img src="gallery/WhatsApp Image 2026-03-04 at 2.50.59 PM.jpeg" alt="Gallery Image 7">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="galleryModal" class="gallery-modal">
+        <span class="close-btn">&times;</span>
+        <img class="gallery-modal-image" src="" alt="">
+        <div class="gallery-modal-nav">
+            <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
     <!-- Contact Section -->
     <section id="contact" class="section contact">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">07. Connect</span>
+                <span class="section-tag">08. Connect</span>
                 <h2>Get In Touch</h2>
             </div>
             <div class="contact-grid">

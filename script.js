@@ -3,6 +3,7 @@
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    initLoader();
     initCursor();
     initNavbar();
     initMobileMenu();
@@ -13,7 +14,163 @@ document.addEventListener('DOMContentLoaded', () => {
     initGSAPAnimations();
     initSmoothScroll();
     initActiveNavOnScroll();
+    initGallery();
 });
+
+// --- Premium Loader — Image Slideshow ---
+function initLoader() {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+
+    // Pool of 30 robotics/tech images
+    const imagePool = [
+        'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1920&q=80',
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80',
+        'https://images.unsplash.com/photo-1589254065878-42c9da997008?w=1920&q=80',
+        'https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&q=80',
+        'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1920&q=80',
+        'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&q=80',
+        'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1920&q=80',
+        'https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=1920&q=80',
+        'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1920&q=80',
+        'https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=1920&q=80',
+        'https://images.unsplash.com/photo-1535378620166-273708d44e4c?w=1920&q=80',
+        'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=1920&q=80',
+        'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80',
+        'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=1920&q=80',
+        'https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?w=1920&q=80',
+        'https://images.unsplash.com/photo-1535378917042-10a22c95931a?w=1920&q=80',
+        'https://images.unsplash.com/photo-1596496050827-8299e0220de1?w=1920&q=80',
+        'https://images.unsplash.com/photo-1544256718-3bcf237f3974?w=1920&q=80',
+        'https://images.unsplash.com/photo-1562408590-e32931084e23?w=1920&q=80',
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&q=80',
+        'https://images.unsplash.com/photo-1580894894513-541e068a3e2b?w=1920&q=80',
+        'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=1920&q=80',
+        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80',
+        'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=1920&q=80',
+        'https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=1920&q=80',
+        'https://images.unsplash.com/photo-1511376777868-611b54f68947?w=1920&q=80',
+        'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80',
+        'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=1920&q=80',
+        'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=80',
+        'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=1920&q=80'
+    ];
+
+    // Randomly select 6 images
+    const shuffled = imagePool.sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, 6);
+
+    // Inject selected images into the DOM
+    const container = document.getElementById('loaderImages');
+    selected.forEach(url => {
+        const div = document.createElement('div');
+        div.className = 'loader-img';
+        div.style.backgroundImage = `url('${url}')`;
+        container.appendChild(div);
+    });
+
+    const images = container.querySelectorAll('.loader-img');
+    const bar = document.getElementById('loaderBar');
+    const nameFirst = loader.querySelector('.loader-name-first');
+    const nameLast = loader.querySelector('.loader-name-last');
+
+    // Lock scroll
+    document.body.classList.add('loading');
+
+    const tl = gsap.timeline({
+        onComplete: () => {
+            document.body.classList.remove('loading');
+            loader.remove();
+        }
+    });
+
+    // 1. Fade in the name
+    tl.to(nameFirst, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out'
+    })
+        .to(nameLast, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power3.out'
+        }, '-=0.3');
+
+    // 2. Loading bar fills over 3 seconds
+    tl.to(bar, {
+        width: '100%',
+        duration: 3,
+        ease: 'power1.inOut'
+    }, 0);
+
+    // 3. Cycle through 6 images — each with a unique entrance animation
+    const entranceEffects = [
+        // Zoom in from center
+        { scale: 1.3, x: 0, y: 0, rotation: 0, filter: 'blur(0px)' },
+        // Slide from left
+        { scale: 1, x: -100, y: 0, rotation: 0, filter: 'blur(0px)' },
+        // Slide from right
+        { scale: 1, x: 100, y: 0, rotation: 0, filter: 'blur(0px)' },
+        // Slide from bottom
+        { scale: 1, x: 0, y: 80, rotation: 0, filter: 'blur(0px)' },
+        // Rotate + scale
+        { scale: 1.2, x: 0, y: 0, rotation: 3, filter: 'blur(0px)' },
+        // Blur reveal
+        { scale: 1.05, x: 0, y: 0, rotation: 0, filter: 'blur(12px)' }
+    ];
+
+    images.forEach((img, i) => {
+        const startTime = 0.5 * i;
+        const fx = entranceEffects[i % entranceEffects.length];
+
+        // Set initial state based on entrance effect
+        gsap.set(img, {
+            scale: fx.scale,
+            x: fx.x,
+            y: fx.y,
+            rotation: fx.rotation,
+            filter: fx.filter
+        });
+
+        // Animate in
+        tl.to(img, {
+            opacity: 1,
+            scale: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            filter: 'blur(0px)',
+            duration: 0.5,
+            ease: 'power2.out'
+        }, startTime);
+
+        // Animate out (except last image)
+        if (i < images.length - 1) {
+            tl.to(img, {
+                opacity: 0,
+                scale: i % 2 === 0 ? 0.95 : 1.05,
+                duration: 0.2,
+                ease: 'power1.in'
+            }, startTime + 0.4);
+        }
+    });
+
+    // 4. After 3s — fade out name and slide loader away
+    tl.to([nameFirst, nameLast], {
+        opacity: 0,
+        y: -30,
+        duration: 0.4,
+        ease: 'power2.in'
+    }, 3.2);
+
+    tl.to(loader, {
+        yPercent: -100,
+        duration: 0.7,
+        ease: 'power4.inOut'
+    }, 3.4);
+}
 
 // --- Custom Cursor ---
 function initCursor() {
@@ -140,7 +297,7 @@ function initHeroCanvas() {
             this.size = Math.random() * 2 + 0.5;
             this.speedX = (Math.random() - 0.5) * 0.4;
             this.speedY = (Math.random() - 0.5) * 0.4;
-            this.opacity = Math.random() * 0.4 + 0.1;
+            this.opacity = Math.random() * 0.15 + 0.05;
         }
         update() {
             this.x += this.speedX;
@@ -168,7 +325,7 @@ function initHeroCanvas() {
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist < 150) {
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(0, 212, 255, ${0.06 * (1 - dist / 150)})`;
+                    ctx.strokeStyle = `rgba(0, 212, 255, ${0.02 * (1 - dist / 150)})`;
                     ctx.lineWidth = 0.6;
                     ctx.moveTo(particles[i].x, particles[i].y);
                     ctx.lineTo(particles[j].x, particles[j].y);
@@ -382,6 +539,14 @@ function initGSAPAnimations() {
         });
     });
 
+    // Gallery items
+    gsap.utils.toArray('.gallery-item').forEach((item, i) => {
+        gsap.from(item, {
+            scrollTrigger: { trigger: item, start: 'top 85%', toggleActions: 'play none none reverse' },
+            scale: 0.9, opacity: 0, duration: 0.6, delay: i * 0.08, ease: 'power3.out'
+        });
+    });
+
     // Contact
     gsap.from('.contact-text', {
         scrollTrigger: { trigger: '.contact-grid', start: 'top 80%', toggleActions: 'play none none reverse' },
@@ -431,4 +596,74 @@ function initActiveNavOnScroll() {
     }, { threshold: 0.3, rootMargin: '-80px 0px 0px 0px' });
 
     sections.forEach(section => observer.observe(section));
+}
+
+// --- Gallery Lightbox ---
+function initGallery() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const modal = document.getElementById('galleryModal');
+    const modalImage = document.querySelector('.gallery-modal-image');
+    const closeBtn = document.querySelector('.close-btn');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    let currentIndex = 0;
+    const galleryImages = Array.from(galleryItems).map(item => item.querySelector('img').src);
+
+    // Open modal
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            currentIndex = index;
+            showImage(currentIndex);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Navigation
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        showImage(currentIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        showImage(currentIndex);
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft') {
+            currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+            showImage(currentIndex);
+        } else if (e.key === 'ArrowRight') {
+            currentIndex = (currentIndex + 1) % galleryImages.length;
+            showImage(currentIndex);
+        } else if (e.key === 'Escape') {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    function showImage(index) {
+        modalImage.src = galleryImages[index];
+        modalImage.style.opacity = '0';
+        setTimeout(() => {
+            modalImage.style.transition = 'opacity 0.3s ease';
+            modalImage.style.opacity = '1';
+        }, 50);
+    }
 }
