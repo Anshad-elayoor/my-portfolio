@@ -6,8 +6,12 @@
 	import { APP_COMPONENTS } from '../apps/registry.js';
 
 	let displayed = $state(/** @type {string | null} */ (null));
+	let backBtn = $state(/** @type {HTMLButtonElement | undefined} */ (undefined));
 	$effect(() => {
-		if (ui.openApp) displayed = ui.openApp;
+		if (ui.openApp) {
+			displayed = ui.openApp;
+			backBtn?.focus();
+		}
 	});
 
 	const section = $derived(sections.find((s) => s.id === displayed));
@@ -42,11 +46,20 @@
 			dragY.set(0);
 		}
 	}
+
+	function onKey(e) {
+		if (e.key === 'Escape' && ui.openApp) close();
+	}
 </script>
+
+<svelte:window onkeydown={onKey} />
 
 <div
 	class="appscreen"
 	class:open={!!ui.openApp}
+	role="dialog"
+	aria-modal="true"
+	aria-label={section?.title ?? 'App'}
 	style="transform-origin: {origin.x}px {origin.y}px; --drag: {$dragY}px;"
 >
 	<!-- pointer handlers here are a decorative swipe-down-to-dismiss bonus gesture;
@@ -59,7 +72,7 @@
 		onpointerup={onPointerUp}
 		onpointercancel={onPointerUp}
 	>
-		<button class="back" onclick={close}>
+		<button class="back" bind:this={backBtn} onclick={close}>
 			<svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6" /></svg>
 			Home
 		</button>

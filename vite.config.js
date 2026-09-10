@@ -13,7 +13,10 @@ export default defineConfig({
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
 				runes: ({ filename }) => filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter(),
+			// GitHub Pages has no server-side routing, so any unmatched path (a typo,
+			// an old bookmark) falls back to this file — GH Pages serves 404.html
+			// automatically for unknown paths, and it's just this same single-page app.
+			adapter: adapter({ fallback: '404.html' }),
 			paths: { base }
 		})
 	]

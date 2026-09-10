@@ -95,7 +95,7 @@
 		<div class="lock-role">{person.role}</div>
 
 		{#if variant === 'desktop'}
-			<button class="unlock-btn" onclick={onDesktopUnlock}>
+			<button class="unlock-btn" autofocus onclick={onDesktopUnlock}>
 				Unlock
 				<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
 			</button>
@@ -110,11 +110,12 @@
 	</div>
 
 	{#if variant === 'mobile'}
+		<!-- Decorative gesture surface only — the real Unlock button above is the
+		     accessible control, so this stays out of the tab order entirely rather
+		     than being a focusable "button" that keyboard/switch input can't operate. -->
 		<div
 			class="swipe-handle"
-			role="button"
-			tabindex="0"
-			aria-label="Swipe up to unlock"
+			aria-hidden="true"
 			onpointerdown={onPointerDown}
 			onpointermove={onPointerMove}
 			onpointerup={onPointerUp}

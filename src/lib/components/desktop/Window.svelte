@@ -7,8 +7,12 @@
 	// Keep showing the last-opened app while the window slides/fades out, so the
 	// body isn't empty mid-close-transition — only `ui.openApp` drives visibility.
 	let displayed = $state(/** @type {string | null} */ (null));
+	let closeBtn = $state(/** @type {HTMLButtonElement | undefined} */ (undefined));
 	$effect(() => {
-		if (ui.openApp) displayed = ui.openApp;
+		if (ui.openApp) {
+			displayed = ui.openApp;
+			closeBtn?.focus();
+		}
 	});
 
 	const section = $derived(sections.find((s) => s.id === displayed));
@@ -27,10 +31,10 @@
 
 <div class="winlayer" class:open={!!ui.openApp}>
 	<button class="scrim" onclick={close} aria-label="Close window"></button>
-	<div class="win">
+	<div class="win" role="dialog" aria-modal="true" aria-label={section?.title ?? 'Window'}>
 		<div class="win-head">
 			<div class="dots">
-				<button class="dot red" onclick={close} aria-label="Close window"></button>
+				<button class="dot red" bind:this={closeBtn} onclick={close} aria-label="Close window"></button>
 				<span class="dot yellow" aria-hidden="true"></span>
 				<span class="dot green" aria-hidden="true"></span>
 			</div>
