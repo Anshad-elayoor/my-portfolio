@@ -1,0 +1,86 @@
+:root {
+	--void: #0a0d10;
+	--desk: #0c1114;
+	--panel: #161c20;
+	--panel-2: #1c2329;
+	--line: #2a323889;
+	--line-solid: #2a3238;
+	--ink: #eef1f3;
+	--sub: #8f9aa2;
+	--faint: #57616a;
+
+	--accent: #4be8ce;
+	--accent-2: #22c3a8;
+	--accent-ink: #04231d;
+	--amber: #f5a524;
+
+	--red: #ff5f57;
+	--yellow: #febc2e;
+	--green: #28c840;
+
+	--spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--ease: cubic-bezier(0.32, 0.08, 0.24, 1);
+
+	--font-display: 'Manrope', system-ui, sans-serif;
+	--font-body: 'IBM Plex Sans', system-ui, sans-serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+/* per-section app-icon badge colors, shared by the desktop icon grid and the mobile home screen */
+.badge-about {
+	background: linear-gradient(155deg, #6fa8ff, #3862dd);
+	--sh: rgba(56, 98, 221, 0.5);
+}
+.badge-work {
+	background: linear-gradient(155deg, #ffc25c, #f2790f);
+	--sh: rgba(242, 121, 15, 0.5);
+}
+.badge-projects {
+	background: linear-gradient(155deg, #a996fb, #6a4fe0);
+	--sh: rgba(106, 79, 224, 0.5);
+}
+.badge-experience {
+	background: linear-gradient(155deg, #5eecd6, #149484);
+	--sh: rgba(20, 148, 132, 0.5);
+}
+.badge-research {
+	background: linear-gradient(155deg, #ff97a6, #e23a5b);
+	--sh: rgba(226, 58, 91, 0.5);
+}
+.badge-teaching {
+	background: linear-gradient(155deg, #7be08e, #17a34a);
+	--sh: rgba(23, 163, 74, 0.5);
+}
+.badge-skills {
+	background: linear-gradient(155deg, #6fd0ff, #0d84c7);
+	--sh: rgba(13, 132, 199, 0.5);
+}
+.badge-elmentrix {
+	background: linear-gradient(155deg, #ff8fd0, #d5279c);
+	--sh: rgba(213, 39, 156, 0.5);
+}
+.badge-gallery {
+	background: linear-gradient(155deg, #9aa3ff, #4c46c9);
+	--sh: rgba(76, 70, 201, 0.5);
+}
+.badge-contact {
+	background: linear-gradient(155deg, #5fe0ac, #079668);
+	--sh: rgba(7, 150, 104, 0.5);
+}
+
+.badge-email {
+	background: linear-gradient(155deg, #5eecd6, #149484);
+	--sh: rgba(20, 148, 132, 0.55);
+}
+.badge-li {
+	background: linear-gradient(155deg, #6fa8ff, #2f5fd6);
+	--sh: rgba(47, 95, 214, 0.55);
+}
+.badge-gh {
+	background: linear-gradient(155deg, #4b545c, #20262b);
+	--sh: rgba(0, 0, 0, 0.55);
+}
+.badge-ig {
+	background: linear-gradient(155deg, #ff9a6b, #e0507a);
+	--sh: rgba(224, 80, 122, 0.55);
+}
