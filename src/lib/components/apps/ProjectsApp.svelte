@@ -1,11 +1,15 @@
 <script>
 	import { projects } from '$lib/content.js';
+	import FileBrowser from '../shared/FileBrowser.svelte';
+
+	const items = projects.map((p, i) => ({ id: String(i), name: p.title, meta: p.status, data: p }));
 </script>
 
 <div class="app-content">
 	<h2>Projects</h2>
-	{#each projects as p}
-		<div class="row">
+	<FileBrowser {items} tint="#5c3adb">
+		{#snippet detail(item)}
+			{@const p = item.data}
 			<div class="row-h">
 				<strong>{p.title}</strong>
 				<span class="status" class:hold={p.status === 'on hold'}>{p.status}</span>
@@ -27,6 +31,6 @@
 					{/if}
 				</dl>
 			{/if}
-		</div>
-	{/each}
+		{/snippet}
+	</FileBrowser>
 </div>

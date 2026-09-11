@@ -1,6 +1,6 @@
 <script>
 	import { sections } from '$lib/content.js';
-	import { ui } from '$lib/stores.svelte.js';
+	import { ui, openWindow } from '$lib/stores.svelte.js';
 	import AppIcon from '../shared/AppIcon.svelte';
 
 	function matches(label) {
@@ -14,7 +14,7 @@
 		<button
 			class="dicon"
 			class:hidden-match={!matches(s.label)}
-			onclick={() => (ui.openApp = s.id)}
+			onclick={() => openWindow(s.id)}
 		>
 			<AppIcon icon={s.icon} badgeClass="badge-{s.id}" />
 			<span>{s.label}</span>

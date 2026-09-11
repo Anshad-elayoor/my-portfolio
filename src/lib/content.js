@@ -12,15 +12,15 @@ export const person = {
 
 export const sections = [
 	{ id: 'about', label: 'About', icon: 'user', title: 'About' },
-	{ id: 'work', label: 'Work', icon: 'bolt', title: 'TechCon26 event platform' },
+	{ id: 'work', label: 'Work', icon: 'compass', title: 'TechCon26 event platform' },
 	{ id: 'projects', label: 'Projects', icon: 'cube', title: 'Projects' },
-	{ id: 'experience', label: 'Experience', icon: 'list', title: 'Experience & education' },
+	{ id: 'experience', label: 'Experience', icon: 'calendar', title: 'Experience & education' },
 	{ id: 'research', label: 'Research', icon: 'doc', title: 'Research' },
 	{ id: 'teaching', label: 'Teaching', icon: 'board', title: 'Teaching & talks' },
-	{ id: 'skills', label: 'Skills', icon: 'gauge', title: 'Skills' },
+	{ id: 'skills', label: 'Skills', icon: 'gear', title: 'Skills' },
 	{ id: 'elmentrix', label: 'ELMENTRIX', icon: 'spark', title: 'ELMENTRIX' },
-	{ id: 'gallery', label: 'Gallery', icon: 'image', title: 'Gallery' },
-	{ id: 'contact', label: 'Contact', icon: 'mail', title: 'Contact' }
+	{ id: 'gallery', label: 'Gallery', icon: 'pinwheel', title: 'Gallery' },
+	{ id: 'contact', label: 'Contact', icon: 'phone', title: 'Contact' }
 ];
 
 export const dockLinks = [

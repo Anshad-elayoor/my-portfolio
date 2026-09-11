@@ -26,61 +26,132 @@
 	--font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
-/* per-section app-icon badge colors, shared by the desktop icon grid and the mobile home screen */
-.badge-about {
-	background: linear-gradient(155deg, #6fa8ff, #3862dd);
-	--sh: rgba(56, 98, 221, 0.5);
+/* Liquid-glass material — the shared "chrome" surface for windows, docks, the
+   taskbar and the lock card. Needs real color/detail behind it (the Wallpaper
+   component) to read as glass rather than plain frosted grey. */
+.glass {
+	position: relative;
+	background: linear-gradient(155deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03) 55%, rgba(255, 255, 255, 0.07));
+	backdrop-filter: blur(26px) saturate(1.8);
+	-webkit-backdrop-filter: blur(26px) saturate(1.8);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	box-shadow:
+		0 30px 70px -24px rgba(0, 0, 0, 0.6),
+		0 2px 0 rgba(255, 255, 255, 0.06) inset,
+		inset 0 1px 0 rgba(255, 255, 255, 0.35),
+		inset 0 -1px 0 rgba(255, 255, 255, 0.05);
 }
-.badge-work {
-	background: linear-gradient(155deg, #ffc25c, #f2790f);
-	--sh: rgba(242, 121, 15, 0.5);
+.glass::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	pointer-events: none;
+	background: linear-gradient(122deg, rgba(255, 255, 255, 0.4) 0%, transparent 22%, transparent 78%, rgba(255, 255, 255, 0.12) 100%);
+	mix-blend-mode: overlay;
 }
-.badge-projects {
-	background: linear-gradient(155deg, #a996fb, #6a4fe0);
-	--sh: rgba(106, 79, 224, 0.5);
+/* Darker, denser variant for panels that carry body text — keeps the glass
+   language without sacrificing reading contrast. */
+.glass-deep {
+	background: linear-gradient(155deg, rgba(18, 23, 27, 0.82), rgba(10, 14, 17, 0.72));
+	backdrop-filter: blur(28px) saturate(1.5);
+	-webkit-backdrop-filter: blur(28px) saturate(1.5);
+	border: 1px solid rgba(255, 255, 255, 0.1);
 }
-.badge-experience {
-	background: linear-gradient(155deg, #5eecd6, #149484);
-	--sh: rgba(20, 148, 132, 0.5);
-}
-.badge-research {
-	background: linear-gradient(155deg, #ff97a6, #e23a5b);
-	--sh: rgba(226, 58, 91, 0.5);
-}
-.badge-teaching {
-	background: linear-gradient(155deg, #7be08e, #17a34a);
-	--sh: rgba(23, 163, 74, 0.5);
-}
-.badge-skills {
-	background: linear-gradient(155deg, #6fd0ff, #0d84c7);
-	--sh: rgba(13, 132, 199, 0.5);
-}
-.badge-elmentrix {
-	background: linear-gradient(155deg, #ff8fd0, #d5279c);
-	--sh: rgba(213, 39, 156, 0.5);
-}
-.badge-gallery {
-	background: linear-gradient(155deg, #9aa3ff, #4c46c9);
-	--sh: rgba(76, 70, 201, 0.5);
-}
-.badge-contact {
-	background: linear-gradient(155deg, #5fe0ac, #079668);
-	--sh: rgba(7, 150, 104, 0.5);
+.glass-deep::after {
+	opacity: 0.5;
 }
 
+/* per-section app-icon glass tint, shared by the desktop icon grid, dock and the
+   mobile home screen — a saturated core color glimpsed through frosted glass,
+   rather than a flat opaque tile. */
+/* Contacts app: warm cream card. */
+.badge-about {
+	--tint: #f2e2c4;
+	--tint-2: #cfa76a;
+	--sh: rgba(158, 121, 61, 0.5);
+}
+/* Safari: sky blue globe. */
+.badge-work {
+	--tint: #7dd3fc;
+	--tint-2: #0a84ff;
+	--sh: rgba(10, 132, 255, 0.5);
+}
+.badge-projects {
+	--tint: #a084fb;
+	--tint-2: #5c3adb;
+	--sh: rgba(106, 79, 224, 0.55);
+}
+/* Calendar: white face. */
+.badge-experience {
+	--tint: #ffffff;
+	--tint-2: #dcdce1;
+	--sh: rgba(0, 0, 0, 0.3);
+}
+/* Notes: yellow legal pad. */
+.badge-research {
+	--tint: #ffe066;
+	--tint-2: #ffb300;
+	--sh: rgba(214, 140, 0, 0.5);
+}
+.badge-teaching {
+	--tint: #63d87c;
+	--tint-2: #128a3e;
+	--sh: rgba(23, 163, 74, 0.55);
+}
+/* Settings: graphite disc. */
+.badge-skills {
+	--tint: #9aa0a8;
+	--tint-2: #5b6067;
+	--sh: rgba(30, 32, 34, 0.5);
+}
+/* Shortcuts: indigo gradient. */
+.badge-elmentrix {
+	--tint: #7c6cff;
+	--tint-2: #3226a8;
+	--sh: rgba(50, 38, 168, 0.55);
+}
+/* Photos: white disc. */
+.badge-gallery {
+	--tint: #ffffff;
+	--tint-2: #e7e7ec;
+	--sh: rgba(0, 0, 0, 0.28);
+}
+.badge-contact {
+	--tint: #4fdba0;
+	--tint-2: #06805a;
+	--sh: rgba(7, 150, 104, 0.55);
+}
+
+/* Apple Mail blue. */
 .badge-email {
-	background: linear-gradient(155deg, #5eecd6, #149484);
-	--sh: rgba(20, 148, 132, 0.55);
+	--tint: #7ad0ff;
+	--tint-2: #0a6fe0;
+	--sh: rgba(10, 111, 224, 0.5);
 }
+/* LinkedIn brand blue. */
 .badge-li {
-	background: linear-gradient(155deg, #6fa8ff, #2f5fd6);
-	--sh: rgba(47, 95, 214, 0.55);
+	--tint: #1275d1;
+	--tint-2: #0a5cb0;
+	--sh: rgba(10, 92, 176, 0.55);
 }
+/* GitHub near-black. */
 .badge-gh {
-	background: linear-gradient(155deg, #4b545c, #20262b);
+	--tint: #2b2f33;
+	--tint-2: #0d1117;
 	--sh: rgba(0, 0, 0, 0.55);
 }
+/* Instagram: the real four-stop brand gradient. */
 .badge-ig {
-	background: linear-gradient(155deg, #ff9a6b, #e0507a);
-	--sh: rgba(224, 80, 122, 0.55);
+	--tint: #d6249f;
+	--tint-2: #833ab4;
+	--sh: rgba(193, 53, 132, 0.55);
+	--badge-bg: radial-gradient(
+		circle at 28% 108%,
+		#fdf497 0%,
+		#fdf497 8%,
+		#fd5949 32%,
+		#d6249f 62%,
+		#285aeb 100%
+	);
 }

@@ -1,22 +1,21 @@
 <script>
 	import { spring } from 'svelte/motion';
+	import { base } from '$app/paths';
 	import { chime } from '$lib/audio.js';
 	import { person } from '$lib/content.js';
 	import { ui } from '$lib/stores.svelte.js';
+	import { enterFullscreen } from '$lib/fullscreen.js';
 	import StatusClock from './StatusClock.svelte';
+	import Wallpaper from './Wallpaper.svelte';
 
 	/** @type {{ variant?: 'desktop' | 'mobile' }} */
 	let { variant = 'desktop' } = $props();
 
 	let lockEl = $state(/** @type {HTMLDivElement | undefined} */ (undefined));
 	let animating = $state(false);
-	let initials = person.name
-		.split(' ')
-		.map((w) => w[0])
-		.join('')
-		.slice(0, 2);
 
 	function reveal() {
+		if (animating) return;
 		animating = true;
 		const delay = ui.reducedMotion ? 0 : 680;
 		setTimeout(() => {
@@ -26,7 +25,9 @@
 
 	// Desktop: circular "iris" reveal expanding from the button that was clicked.
 	function onDesktopUnlock(e) {
+		if (animating) return;
 		chime();
+		enterFullscreen();
 		if (ui.reducedMotion || !lockEl) {
 			ui.locked = false;
 			return;
@@ -53,6 +54,7 @@
 	const THRESHOLD = -110;
 
 	function onPointerDown(e) {
+		if (animating) return;
 		dragging = true;
 		startY = e.clientY;
 		e.currentTarget.setPointerCapture?.(e.pointerId);
@@ -67,15 +69,23 @@
 		if ($dragY < THRESHOLD) {
 			dragY.set(-900);
 			chime();
+			enterFullscreen();
 			reveal();
 		} else {
 			dragY.set(0);
 		}
 	}
+	// Tap-to-unlock fallback for keyboard/switch/assistive input — the pill is a
+	// real button, the drag surface around it is a decorative pointer-only bonus.
 	function onMobileButtonUnlock() {
 		chime();
+		enterFullscreen();
 		reveal();
 	}
+
+	const dateShort = $derived(
+		new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'short' })
+	);
 </script>
 
 <div
@@ -85,48 +95,64 @@
 	bind:this={lockEl}
 	style={variant === 'mobile' ? `transform: translateY(${$dragY}px)` : undefined}
 >
-	<div class="lock-bg"></div>
+	<Wallpaper image="{base}/{variant === 'mobile' ? 'lock-mobile.png' : 'lock-desktop.png'}" />
 
-	<StatusClock variant="lock" />
+	<!-- Thin info strip, not a panel — carries a little system-status flavor
+	     without ever covering enough of the photo to matter. -->
+	<div class="lock-topbar">
+		<span class="lt-tag">anshad-os</span>
+		<span class="lt-date">{dateShort}</span>
+		<div class="lt-glyphs" aria-hidden="true">
+			<svg viewBox="0 0 20 12" class="signal"><rect x="0" y="7" width="3" height="5" rx="0.5" /><rect x="5.5" y="5" width="3" height="7" rx="0.5" /><rect x="11" y="3" width="3" height="9" rx="0.5" /><rect x="16.5" y="0" width="3" height="12" rx="0.5" /></svg>
+			<svg viewBox="0 0 20 15" class="wifi"><path d="M1 5.5a14 14 0 0 1 18 0M4 9a9 9 0 0 1 12 0M7.3 12.4a4.2 4.2 0 0 1 5.4 0" /><circle cx="10" cy="14.2" r="1" fill="currentColor" stroke="none" /></svg>
+			<svg viewBox="0 0 26 13" class="battery"><rect x="0.5" y="0.5" width="21" height="12" rx="2.5" /><rect x="23" y="4" width="2" height="5" rx="1" fill="currentColor" stroke="none" /><rect x="2" y="2" width="16" height="9" rx="1" fill="currentColor" stroke="none" /></svg>
+		</div>
+	</div>
 
-	<div class="lock-card">
-		<div class="lock-avatar">{initials}</div>
-		<div class="lock-name">{person.name}</div>
-		<div class="lock-role">{person.role}</div>
+	<div class="face-label face-label-left" aria-hidden="true">
+		<span>Mechatronics</span>
+		<span>Robotics</span>
+	</div>
+	<div class="face-label face-label-right" aria-hidden="true">
+		<span>VLSI</span>
+		<span>Silicon</span>
+	</div>
 
+	<div class="clock-wrap">
+		<StatusClock variant="lock" />
+	</div>
+
+	<div class="lock-bottom">
 		{#if variant === 'desktop'}
-			<button class="unlock-btn" autofocus onclick={onDesktopUnlock}>
-				Unlock
-				<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+			<div class="lock-id">
+				<div class="lock-name">{person.name}</div>
+				<div class="lock-role">{person.role}</div>
+			</div>
+			<!-- svelte-ignore a11y_autofocus -->
+			<button class="unlock-fab" autofocus onclick={onDesktopUnlock} aria-label="Unlock">
+				<svg viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" /></svg>
 			</button>
 			<div class="lock-hint">click, or press Enter</div>
-		{:else}
-			<button class="unlock-btn" onclick={onMobileButtonUnlock}>
-				Unlock
-				<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-			</button>
-			<div class="lock-hint">or swipe up from below</div>
 		{/if}
 	</div>
 
 	{#if variant === 'mobile'}
-		<!-- Decorative gesture surface only — the real Unlock button above is the
-		     accessible control, so this stays out of the tab order entirely rather
-		     than being a focusable "button" that keyboard/switch input can't operate. -->
+		<!-- Pointer handlers here are a decorative drag-to-unlock bonus; the real
+		     button below provides full keyboard/assistive-tech access. -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
 			class="swipe-handle"
-			aria-hidden="true"
 			onpointerdown={onPointerDown}
 			onpointermove={onPointerMove}
 			onpointerup={onPointerUp}
 			onpointercancel={onPointerUp}
 		>
-			<div class="swipe-pill"></div>
-			<div class="swipe-label">swipe up to unlock</div>
+			<button class="swipe-pill-btn" onclick={onMobileButtonUnlock} aria-label="Unlock">
+				<span class="swipe-pill"></span>
+			</button>
+			<div class="swipe-label" aria-hidden="true">swipe up to unlock</div>
 		</div>
 	{/if}
-
-	<div class="lock-build">anshad-os &middot; build 2026.09</div>
 </div>
 
 <style>
@@ -137,12 +163,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		gap: 24px;
-		background:
-			radial-gradient(1500px 950px at 50% -8%, rgba(75, 232, 206, 0.11), transparent 55%),
-			radial-gradient(700px 500px at 12% 92%, rgba(245, 165, 36, 0.07), transparent 60%),
-			linear-gradient(180deg, #0b1013, #080b0d);
+		background: var(--void);
 		clip-path: circle(150% at 50% 42%);
 		touch-action: none;
 	}
@@ -153,108 +174,188 @@
 		clip-path: none;
 		transition: transform 0.6s var(--ease);
 	}
-	.lock-bg {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		opacity: 0.55;
-		background-image:
-			linear-gradient(rgba(75, 232, 206, 0.05) 1px, transparent 1px),
-			linear-gradient(90deg, rgba(75, 232, 206, 0.05) 1px, transparent 1px);
-		background-size: 40px 40px;
-		mask-image: radial-gradient(950px 750px at 50% 36%, #000 0%, transparent 72%);
-	}
-	.lock-card {
+	/* .wallpaper is position:absolute (a "positioned" box), which paints after
+	   plain in-flow siblings in CSS stacking order regardless of DOM order — so
+	   without their own stacking context, the bars below would render behind it. */
+	.lock-topbar,
+	.clock-wrap,
+	.lock-bottom {
 		position: relative;
-		width: min(320px, 86vw);
-		background: rgba(22, 28, 32, 0.68);
-		border: 1px solid rgba(255, 255, 255, 0.09);
-		border-radius: 16px;
-		padding: 28px 24px 24px;
-		text-align: center;
-		backdrop-filter: blur(16px) saturate(1.3);
-		box-shadow:
-			0 30px 60px -20px rgba(0, 0, 0, 0.5),
-			inset 0 1px 0 rgba(255, 255, 255, 0.08);
+		z-index: 1;
 	}
-	.lock-avatar {
-		width: 58px;
-		height: 58px;
-		border-radius: 16px;
-		margin: 0 auto 16px;
-		background: linear-gradient(155deg, var(--accent), #0f8e7c);
+
+	.lock-topbar {
+		width: 100%;
+		flex: none;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		gap: 10px;
+		padding: 16px 20px;
+		box-sizing: border-box;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.04em;
+		color: rgba(255, 255, 255, 0.75);
+		text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+	}
+	.lt-tag {
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+	.lt-date {
+		opacity: 0.75;
+	}
+	.face-label {
+		position: absolute;
+		top: 35%;
+		transform: translateY(-50%);
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
 		font-family: var(--font-display);
 		font-weight: 800;
-		color: var(--accent-ink);
-		font-size: 21px;
-		box-shadow:
-			0 12px 24px -8px rgba(75, 232, 206, 0.45),
-			inset 0 1px 0 rgba(255, 255, 255, 0.35);
+		text-transform: uppercase;
+		font-size: clamp(22px, 3.6vw, 58px);
+		line-height: 0.94;
+		letter-spacing: -0.01em;
+		color: rgba(255, 255, 255, 0.95);
+		text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+		pointer-events: none;
+	}
+	.face-label-left {
+		right: 70%;
+		align-items: flex-end;
+		text-align: right;
+	}
+	.face-label-right {
+		left: 70%;
+		align-items: flex-start;
+		text-align: left;
+	}
+	/* The mobile photo crops in tight around the face — there's no clear side
+	   margin at eye level like the desktop frame has. The flat band above the
+	   hair is wide open on every phone aspect ratio, so mobile moves the same
+	   full labels up there instead of squeezing them beside the face. */
+	.lock.mobile-variant .face-label {
+		top: 16%;
+		font-size: clamp(22px, 5vw, 44px);
+	}
+	.lock.mobile-variant .face-label-left {
+		right: auto;
+		left: 6%;
+		align-items: flex-start;
+		text-align: left;
+	}
+	.lock.mobile-variant .face-label-right {
+		left: auto;
+		right: 6%;
+		align-items: flex-end;
+		text-align: right;
+	}
+	.lt-glyphs {
+		margin-left: auto;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		color: rgba(255, 255, 255, 0.85);
+	}
+	.lt-glyphs svg {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1;
+		filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+	}
+	.lt-glyphs .signal {
+		width: 15px;
+		height: 9px;
+	}
+	.lt-glyphs .signal rect {
+		fill: currentColor;
+		stroke: none;
+	}
+	.lt-glyphs .wifi {
+		width: 15px;
+		height: 11px;
+		stroke-width: 1.4;
+		stroke-linecap: round;
+	}
+	.lt-glyphs .battery {
+		width: 20px;
+		height: 10px;
+	}
+
+	.clock-wrap {
+		flex: none;
+		margin-top: auto;
+		margin-bottom: 18px;
+		text-align: center;
+	}
+
+	.lock-bottom {
+		flex: none;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		padding-bottom: 40px;
+		min-height: 20px;
+	}
+	.lock-id {
+		text-align: center;
+		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
 	}
 	.lock-name {
 		font-family: var(--font-display);
 		font-weight: 800;
-		font-size: 18.5px;
-		margin-bottom: 3px;
+		font-size: 16px;
+		margin-bottom: 2px;
 	}
 	.lock-role {
-		font-size: 12.5px;
-		color: var(--sub);
-		margin-bottom: 20px;
+		font-size: 12px;
+		color: rgba(255, 255, 255, 0.7);
 	}
-	.unlock-btn {
-		width: 100%;
-		background: linear-gradient(155deg, #5eecd6, var(--accent-2));
-		color: var(--accent-ink);
-		border: none;
-		border-radius: 9px;
-		padding: 13px;
-		font-weight: 700;
-		font-size: 14px;
-		font-family: var(--font-body);
+	.unlock-fab {
+		width: 52px;
+		height: 52px;
+		border-radius: 50%;
+		border: 1px solid rgba(255, 255, 255, 0.35);
+		background: rgba(20, 24, 28, 0.4);
+		backdrop-filter: blur(16px) saturate(1.6);
+		-webkit-backdrop-filter: blur(16px) saturate(1.6);
+		box-shadow:
+			0 10px 22px -8px rgba(0, 0, 0, 0.55),
+			inset 0 1px 0 rgba(255, 255, 255, 0.3);
 		cursor: pointer;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 8px;
-		box-shadow:
-			0 10px 22px -8px rgba(75, 232, 206, 0.5),
-			inset 0 1px 0 rgba(255, 255, 255, 0.3);
-		transition: transform 0.15s var(--spring);
+		transition: transform 0.15s var(--spring), background 0.15s;
 	}
-	.unlock-btn:hover {
-		transform: translateY(-1px);
+	.unlock-fab:hover {
+		transform: translateY(-2px);
+		background: rgba(30, 35, 40, 0.5);
 	}
-	.unlock-btn:active {
-		transform: scale(0.97);
+	.unlock-fab:active {
+		transform: scale(0.94);
 	}
-	.unlock-btn:focus-visible {
+	.unlock-fab:focus-visible {
 		outline: 2px solid #fff;
 		outline-offset: 2px;
 	}
-	.unlock-btn svg {
-		width: 15px;
-		height: 15px;
-		stroke: var(--accent-ink);
+	.unlock-fab svg {
+		width: 20px;
+		height: 20px;
+		stroke: #fff;
 		fill: none;
-		stroke-width: 2.2;
-	}
-	.lock-build {
-		position: absolute;
-		left: 18px;
-		bottom: 16px;
-		font-family: var(--font-mono);
-		font-size: 10.5px;
-		color: var(--faint);
+		stroke-width: 2.4;
+		stroke-linecap: round;
+		stroke-linejoin: round;
 	}
 	.lock-hint {
 		font-family: var(--font-mono);
 		font-size: 11px;
-		color: var(--faint);
-		margin-top: 3px;
+		color: rgba(255, 255, 255, 0.65);
+		text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 	}
 
 	.swipe-handle {
@@ -262,26 +363,44 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		height: 40%;
+		height: 30%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: flex-end;
 		gap: 10px;
-		padding-bottom: 26px;
+		padding-bottom: 22px;
+		z-index: 1;
+	}
+	.swipe-pill-btn {
+		background: none;
+		border: none;
+		padding: 14px 32px;
+		margin: 0;
 		cursor: grab;
+		-webkit-tap-highlight-color: transparent;
+	}
+	.swipe-pill-btn:active {
+		cursor: grabbing;
+	}
+	.swipe-pill-btn:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 4px;
+		border-radius: 6px;
 	}
 	.swipe-pill {
+		display: block;
 		width: 44px;
 		height: 5px;
 		border-radius: 3px;
-		background: var(--sub);
-		opacity: 0.7;
+		background: rgba(255, 255, 255, 0.75);
+		opacity: 0.85;
 	}
 	.swipe-label {
 		font-family: var(--font-mono);
 		font-size: 11px;
-		color: var(--faint);
+		color: rgba(255, 255, 255, 0.65);
+		text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

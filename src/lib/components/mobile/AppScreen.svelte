@@ -96,7 +96,9 @@
 		position: absolute;
 		inset: 0;
 		z-index: 9;
-		background: var(--panel);
+		background: linear-gradient(180deg, rgba(18, 23, 27, 0.92), rgba(10, 14, 17, 0.96));
+		backdrop-filter: blur(30px) saturate(1.5);
+		-webkit-backdrop-filter: blur(30px) saturate(1.5);
 		display: flex;
 		flex-direction: column;
 		transform: scale(0.14) translateY(var(--drag, 0px));

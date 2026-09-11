@@ -21,6 +21,11 @@
 		font-weight: 600;
 		color: var(--ink);
 		flex: none;
+		/* Wallpaper is position:absolute, which paints after plain in-flow
+		   siblings regardless of DOM order — without its own stacking
+		   context this bar would render invisibly behind it. */
+		position: relative;
+		z-index: 1;
 	}
 	.glyphs {
 		display: flex;

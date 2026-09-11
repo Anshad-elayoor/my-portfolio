@@ -1,5 +1,8 @@
 node_modules
 
+# Claude Code local state (worktrees, session config) - never part of the site
+.claude
+
 # Output
 .output
 .vercel

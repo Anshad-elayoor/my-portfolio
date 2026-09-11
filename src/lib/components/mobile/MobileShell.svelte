@@ -1,5 +1,7 @@
 <script>
+	import { base } from '$app/paths';
 	import LockScreen from '../shared/LockScreen.svelte';
+	import Wallpaper from '../shared/Wallpaper.svelte';
 	import StatusBar from './StatusBar.svelte';
 	import HomeScreen from './HomeScreen.svelte';
 	import MobileDock from './MobileDock.svelte';
@@ -9,8 +11,7 @@
 
 <div class="stage">
 	<div class="home">
-		<div class="glow g1"></div>
-		<div class="glow g2"></div>
+		<Wallpaper image="{base}/home-mobile.png" />
 		<StatusBar />
 		<HomeScreen />
 		<MobileDock />
@@ -38,26 +39,5 @@
 		flex-direction: column;
 		background: var(--desk);
 		overflow: hidden;
-	}
-	.glow {
-		position: absolute;
-		border-radius: 50%;
-		filter: blur(70px);
-		opacity: 0.5;
-		pointer-events: none;
-	}
-	.glow.g1 {
-		width: 420px;
-		height: 420px;
-		background: radial-gradient(circle, rgba(75, 232, 206, 0.16), transparent 70%);
-		top: -140px;
-		right: -120px;
-	}
-	.glow.g2 {
-		width: 360px;
-		height: 360px;
-		background: radial-gradient(circle, rgba(245, 165, 36, 0.1), transparent 70%);
-		bottom: -100px;
-		left: -60px;
 	}
 </style>

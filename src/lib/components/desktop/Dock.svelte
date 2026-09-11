@@ -29,7 +29,7 @@
 	<!-- mousemove/mouseleave here are a purely decorative hover effect; every actual
 	     control inside is a real, keyboard-focusable <a> — nothing loses accessibility -->
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div class="dock" bind:this={dockEl} onmousemove={onMove} onmouseleave={onLeave} role="toolbar" aria-label="Quick links">
+	<div class="dock glass" bind:this={dockEl} onmousemove={onMove} onmouseleave={onLeave} role="toolbar" tabindex="-1" aria-label="Quick links">
 		{#each dockLinks as link}
 			<a
 				class="dockicon"
@@ -60,13 +60,7 @@
 		align-items: flex-end;
 		gap: 9px;
 		padding: 10px 12px;
-		background: rgba(22, 28, 32, 0.62);
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 18px;
-		backdrop-filter: blur(18px) saturate(1.4);
-		box-shadow:
-			0 18px 40px -14px rgba(0, 0, 0, 0.55),
-			inset 0 1px 0 rgba(255, 255, 255, 0.07);
+		border-radius: 22px;
 	}
 	.dockicon {
 		display: flex;
